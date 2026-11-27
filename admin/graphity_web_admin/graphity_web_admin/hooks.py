@@ -1,0 +1,7 @@
+app_name = "graphity_web_admin"
+app_title = "Graphity Web Admin"
+app_publisher = "Graphity Group"
+app_description = "Content approval and release export for Graphity Solutions"
+app_email = "info@graphitygroup.com"
+app_license = "Proprietary"
+before_install = "graphity_web_admin.install.ensure_roles"

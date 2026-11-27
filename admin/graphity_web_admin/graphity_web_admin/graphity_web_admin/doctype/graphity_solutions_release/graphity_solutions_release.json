@@ -1,0 +1,207 @@
+{
+  "doctype": "DocType",
+  "name": "Graphity Solutions Release",
+  "module": "Graphity Web Admin",
+  "engine": "InnoDB",
+  "autoname": "format:GSR-{#####}",
+  "is_submittable": 1,
+  "track_changes": 1,
+  "field_order": [
+    "metrics",
+    "planned",
+    "logged",
+    "approvals",
+    "stock",
+    "en",
+    "project_en",
+    "date_en",
+    "overview_en",
+    "overview_body_en",
+    "other_steps_en",
+    "module_labels_en",
+    "ar",
+    "project_ar",
+    "date_ar",
+    "overview_ar",
+    "overview_body_ar",
+    "other_steps_ar",
+    "module_labels_ar",
+    "media",
+    "hero_image",
+    "release_snapshot"
+  ],
+  "fields": [
+    {
+      "fieldname": "metrics",
+      "label": "Demo metrics",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "planned",
+      "label": "Planned hours",
+      "fieldtype": "Int",
+      "reqd": 1,
+      "default": "120",
+      "non_negative": 1
+    },
+    {
+      "fieldname": "logged",
+      "label": "Logged hours",
+      "fieldtype": "Int",
+      "reqd": 1,
+      "default": "96",
+      "non_negative": 1
+    },
+    {
+      "fieldname": "approvals",
+      "label": "Pending approvals",
+      "fieldtype": "Int",
+      "reqd": 1,
+      "default": "2",
+      "non_negative": 1
+    },
+    {
+      "fieldname": "stock",
+      "label": "Stock alerts",
+      "fieldtype": "Int",
+      "reqd": 1,
+      "default": "3",
+      "non_negative": 1
+    },
+    {
+      "fieldname": "en",
+      "label": "EN",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "project_en",
+      "label": "Project name",
+      "fieldtype": "Data",
+      "default": "Northline Design Office",
+      "reqd": 1
+    },
+    {
+      "fieldname": "date_en",
+      "label": "Sample date label",
+      "fieldtype": "Data",
+      "default": "18 November 2026",
+      "reqd": 1
+    },
+    {
+      "fieldname": "overview_en",
+      "label": "Overview tab label",
+      "fieldtype": "Data",
+      "default": "Overview",
+      "reqd": 1
+    },
+    {
+      "fieldname": "overview_body_en",
+      "label": "Overview description",
+      "fieldtype": "Small Text",
+      "default": "Review the project schedule and delivery exceptions in the morning overview.",
+      "reqd": 1
+    },
+    {
+      "fieldname": "other_steps_en",
+      "label": "Other walkthrough labels (four lines)",
+      "fieldtype": "Small Text",
+      "default": "Operations\nApprovals\nInsight\nNext action",
+      "reqd": 1
+    },
+    {
+      "fieldname": "module_labels_en",
+      "label": "Module labels (eight lines)",
+      "fieldtype": "Small Text",
+      "default": "Finance\nHR & Payroll\nInventory\nProjects\nAnalytics\nWorkflows\nCRM\nHelpdesk",
+      "reqd": 1
+    },
+    {
+      "fieldname": "ar",
+      "label": "AR",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "project_ar",
+      "label": "Project name",
+      "fieldtype": "Data",
+      "default": "مكتب نورث لاين للتصميم",
+      "reqd": 1
+    },
+    {
+      "fieldname": "date_ar",
+      "label": "Sample date label",
+      "fieldtype": "Data",
+      "default": "18 نوفمبر 2026",
+      "reqd": 1
+    },
+    {
+      "fieldname": "overview_ar",
+      "label": "Overview tab label",
+      "fieldtype": "Data",
+      "default": "نظرة عامة",
+      "reqd": 1
+    },
+    {
+      "fieldname": "overview_body_ar",
+      "label": "Overview description",
+      "fieldtype": "Small Text",
+      "default": "راجع جدول المشروع واستثناءات التوريد في النظرة الصباحية.",
+      "reqd": 1
+    },
+    {
+      "fieldname": "other_steps_ar",
+      "label": "Other walkthrough labels (four lines)",
+      "fieldtype": "Small Text",
+      "default": "التنفيذ\nالموافقات\nالتحليل\nالخطوة التالية",
+      "reqd": 1
+    },
+    {
+      "fieldname": "module_labels_ar",
+      "label": "Module labels (eight lines)",
+      "fieldtype": "Small Text",
+      "default": "المالية\nالموارد البشرية والرواتب\nالمخزون\nالمشروعات\nالتحليلات\nسير العمل\nإدارة علاقات العملاء\nمكتب الدعم",
+      "reqd": 1
+    },
+    {
+      "fieldname": "media",
+      "label": "Media",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "hero_image",
+      "label": "ERP hero image",
+      "fieldtype": "Attach Image"
+    },
+    {
+      "fieldname": "release_snapshot",
+      "label": "Approved snapshot",
+      "fieldtype": "Long Text",
+      "hidden": 1,
+      "read_only": 1
+    }
+  ],
+  "permissions": [
+    {
+      "role": "Graphity Solutions Editor",
+      "read": 1,
+      "write": 1,
+      "create": 1
+    },
+    {
+      "role": "Graphity Solutions Publisher",
+      "submit": 1,
+      "read": 1,
+      "write": 1,
+      "create": 1
+    },
+    {
+      "role": "System Manager",
+      "submit": 1,
+      "read": 1,
+      "write": 1,
+      "create": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC"
+}
