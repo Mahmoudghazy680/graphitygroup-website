@@ -1,4 +1,5 @@
 import { mkdir, writeFile } from 'node:fs/promises';
+import { publishedPortfolio } from './published-portfolio.mjs';
 
 const origin = 'https://graphitygroup.com';
 const email = 'info@graphitygroup.com';
@@ -19,7 +20,14 @@ const copy = {
       ['Graphic design', 'Presentations, brochures, packaging and print materials built around a clear brief.'],
       ['Digital creative', 'Campaign visuals, social templates and launch assets designed for your channels.'],
     ],
+    whyTitle: 'Why work with Graphity Studio', whyText: 'A small senior team, a clear process and accountability from brief to delivery.',
+    commitments: [
+      ['Dedicated project lead', 'One point of contact who owns your brief end to end, not a rotating account team.'],
+      ['Fixed-scope milestones', 'Agreed deliverables and dates up front, with revisions scoped before work begins.'],
+      ['Source files included', 'Editable source files and brand guidelines handed over at project close, not held back.'],
+    ],
     portfolio: 'Portfolio coming soon', portfolioText: 'Selected projects will appear here after publication approval.',
+    portfolioTitle: 'Selected work', result: 'Result', testimonialsTitle: 'What clients say',
     brief: 'Start a project', briefText: 'Tell us what you’re launching, which deliverables you need and when you need them.',
     emailCta: 'Email your brief', emailSubject: 'Graphity Studio project brief', whatsapp: 'Discuss on WhatsApp', whatsappText: 'Hello Graphity Studio, I’d like to discuss a design project.',
     concept: 'Studio visual concept',
@@ -40,7 +48,14 @@ const copy = {
       ['التصميم الجرافيكي', 'عروض تقديمية وكتيبات وتغليف ومطبوعات مصمّمة وفق أهداف مشروعك.'],
       ['التصميم الرقمي', 'مواد للحملات وقوالب للتواصل الاجتماعي وأصول بصرية ملائمة لقنواتك الرقمية.'],
     ],
+    whyTitle: 'لماذا تعمل مع جرافيتي ستوديو', whyText: 'فريق أساسي متمرّس، ومنهجية عمل واضحة، ومسؤولية كاملة من استلام الطلب حتى التسليم.',
+    commitments: [
+      ['مسؤول مشروع واحد', 'جهة اتصال واحدة تتابع طلبك من البداية للنهاية، بدل فريق حسابات متغيّر.'],
+      ['مراحل بنطاق محدد', 'نتفق على المخرجات والمواعيد مسبقاً، وتحدّد التعديلات قبل بدء العمل.'],
+      ['تسليم الملفات المصدرية', 'نسلّمك الملفات القابلة للتعديل ودليل الهوية عند إغلاق المشروع، دون حجبها.'],
+    ],
     portfolio: 'أعمالنا قريباً', portfolioText: 'نعرض هنا نماذج من أعمالنا بعد الحصول على موافقة النشر.',
+    portfolioTitle: 'أعمال مختارة', result: 'النتيجة', testimonialsTitle: 'آراء عملائنا',
     brief: 'ابدأ مشروعك', briefText: 'أخبرنا عن مشروعك والمخرجات المطلوبة والموعد الذي تستهدفه.',
     emailCta: 'أرسل تفاصيل مشروعك', emailSubject: 'طلب مشروع من جرافيتي ستوديو', whatsapp: 'تواصل عبر واتساب', whatsappText: 'مرحباً جرافيتي ستوديو، أودّ مناقشة مشروع تصميم.',
     concept: 'تصوّر بصري للاستوديو',
@@ -52,6 +67,30 @@ function artwork(division) {
 }
 
 const studioServiceIds = ['brand-identity', 'graphic-design', 'digital-creative'];
+
+function portfolioSection(t, language, arabic) {
+  if (!publishedPortfolio) return `<section class="portfolio-note"><h2>${t.portfolio}</h2><p>${t.portfolioText}</p></section>`;
+  const title = arabic ? 'titleAr' : 'titleEn';
+  const summary = arabic ? 'summaryAr' : 'summaryEn';
+  const result = arabic ? 'resultAr' : 'resultEn';
+  const quote = arabic ? 'quoteAr' : 'quoteEn';
+  const role = arabic ? 'authorRoleAr' : 'authorRoleEn';
+  const cases = `<section class="studio-section" aria-labelledby="portfolio">
+    <h2 id="portfolio">${t.portfolioTitle}</h2>
+    <div class="service-grid">${publishedPortfolio.items.map(item => `<article>
+      ${item.cover ? `<img src="${item.cover}" alt="" width="360" height="240" loading="lazy">` : ''}
+      <h3>${item[title]}</h3><p>${item[summary]}</p><p><strong>${t.result}:</strong> ${item[result]}</p>
+    </article>`).join('')}</div>
+  </section>`;
+  if (!publishedPortfolio.testimonials.length) return cases;
+  const testimonials = `<section class="studio-section" aria-labelledby="testimonials">
+    <h2 id="testimonials">${t.testimonialsTitle}</h2>
+    <div class="service-grid">${publishedPortfolio.testimonials.map(item => `<article>
+      <p>“${item[quote]}”</p><p><strong>${item.authorName}</strong>, ${item[role]}</p>
+    </article>`).join('')}</div>
+  </section>`;
+  return cases + testimonials;
+}
 
 function divisionCard({ division, link, title, offerings, action }) {
   return `<a class="division ${division}-card" href="${link}">
@@ -87,18 +126,38 @@ function page(language, studio) {
   const consultation = origin + '/' + language + '/contact/';
   const solutionsPath = '/solutions/' + language + '/';
   const title = studio ? t.studio : t.group;
+  const description = studio ? t.studioIntro : t.groupDescription;
+  const canonical = origin + (studio ? studioPath : groupPath);
+  const ogImage = origin + (studio ? '/assets/studio-art.webp' : '/assets/graphity-logo.jpg');
   return `<!doctype html>
 <html lang="${language}" dir="${arabic ? 'rtl' : 'ltr'}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="${studio ? t.studioIntro : t.groupDescription}">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="${description}">
   <meta name="theme-color" content="#101015">
   <title>${title} | ${studio ? t.studioTag : t.title}</title>
+  <link rel="canonical" href="${canonical}">
+  <link rel="alternate" hreflang="${language}" href="${canonical}">
+  <link rel="alternate" hreflang="${other}" href="${origin + otherPath}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${description}">
+  <meta property="og:url" content="${canonical}">
+  <meta property="og:image" content="${ogImage}">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/assets/graphity-mark.png">
   <link rel="stylesheet" href="/assets/site.css">
   ${studio ? '' : '<link rel="stylesheet" href="/assets/gateway.css"><script src="/assets/gateway.js" defer></script>'}
+  ${studio ? '' : `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'Organization', name: t.group, url: origin,
+    logo: origin + '/assets/graphity-logo.jpg', email: email,
+    subOrganization: [
+      { '@type': 'Organization', name: t.studio, url: origin + '/studio/' + language + '/' },
+      { '@type': 'Organization', name: t.solutions, url: origin + '/solutions/' + language + '/' },
+    ],
+  })}</script>`}
 </head>
 <body class="${studio ? 'studio-page' : 'gateway'}">
   <a class="skip-link" href="#main">${t.skip}</a>
@@ -127,7 +186,12 @@ function page(language, studio) {
       <h2>${t.processTitle}</h2>
       <ol class="process">${t.process.map(step => `<li>${step}</li>`).join('')}</ol>
     </section>
-    <section class="portfolio-note"><h2>${t.portfolio}</h2><p>${t.portfolioText}</p></section>
+    <section class="studio-section" aria-labelledby="why-studio">
+      <h2 id="why-studio">${t.whyTitle}</h2>
+      <p class="section-lede">${t.whyText}</p>
+      <div class="service-grid">${t.commitments.map(([heading, detail]) => `<article><h3>${heading}</h3><p>${detail}</p></article>`).join('')}</div>
+    </section>
+    ${portfolioSection(t, language, arabic)}
     <section class="brief" id="brief"><h2>${t.brief}</h2><p>${t.briefText}</p>
       <div class="brief-actions">
         <a class="button" href="mailto:${email}?subject=${encodeURIComponent(t.emailSubject)}">${t.emailCta}</a>
@@ -175,3 +239,12 @@ for (const language of ['en', 'ar']) {
 }
 
 await import('./solutions.mjs');
+
+const { serviceIds } = await import('./solutions-content.mjs');
+const routes = [
+  '/', '/ar/', '/studio/en/', '/studio/ar/', '/solutions/en/', '/solutions/ar/',
+  ...serviceIds.flatMap(id => ['/solutions/en/' + id + '/', '/solutions/ar/' + id + '/']),
+];
+
+await writeFile('dist/robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`);
+await writeFile('dist/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${routes.map(route => `  <url><loc>${origin}${route}</loc></url>`).join('\n')}\n</urlset>\n`);

@@ -50,6 +50,12 @@ export const solutionsCopy = {
     ],
     approachTitle: 'Standard where it fits. Custom where it matters.',
     approachText: 'We start with established processes and standard ERP capabilities. When a business requirement needs a different workflow, we document the gap and agree on a customization or integration before building it.',
+    commitmentsTitle: 'What you can expect from us',
+    commitments: [
+      ['A named delivery lead', 'One accountable contact for the engagement, from discovery through go-live support.'],
+      ['Scoped, reviewable milestones', 'Each release is agreed in writing before work starts, with test evidence at handover.'],
+      ['Documented ownership on handover', 'Configuration, integrations and access are documented so your team isn’t dependent on us to operate the system.'],
+    ],
     deliveryTitle: 'How we deliver', output: 'Deliverable',
     delivery: [
       ['Discover', 'Map workflows and identify the outcomes the first release must support.', 'Discovery brief and process map'],
@@ -121,6 +127,12 @@ export const solutionsCopy = {
     ],
     approachTitle: 'نبدأ بالوظائف القياسية ونخصص حسب الحاجة.',
     approachText: 'نبدأ بالإجراءات المتعارف عليها ووظائف ERP القياسية. وإذا احتاج العمل إلى مسار مختلف، نوثّق الفجوة ونتفق على التخصيص أو التكامل قبل التنفيذ.',
+    commitmentsTitle: 'ما يمكنك توقعه منا',
+    commitments: [
+      ['مسؤول تنفيذ محدد', 'جهة اتصال واحدة مسؤولة عن المشروع من الاكتشاف وحتى دعم الإطلاق.'],
+      ['مراحل محددة وقابلة للمراجعة', 'نتفق على كل إصدار كتابياً قبل بدء العمل، مع أدلة اختبار عند التسليم.'],
+      ['توثيق المسؤوليات عند التسليم', 'نوثّق الإعدادات والتكاملات والصلاحيات حتى لا يعتمد فريقك علينا لتشغيل النظام.'],
+    ],
     deliveryTitle: 'كيف ننفّذ', output: 'المخرج',
     delivery: [
       ['الاكتشاف', 'نوثّق إجراءات العمل والنتائج المطلوبة من الإصدار الأول.', 'ملخص الاكتشاف وخريطة الإجراءات'],

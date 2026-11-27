@@ -25,15 +25,26 @@ function pageShell(context, title, description, body) {
   const { t, language, arabic, base, current } = context;
   const other = arabic ? 'en' : 'ar';
   const otherRoute = '/solutions/' + other + '/' + current;
+  const canonical = origin + base + current;
+  const ogImage = origin + '/assets/graphity-erp-hero.webp';
   return `<!doctype html>
 <html lang="${language}" dir="${arabic ? 'rtl' : 'ltr'}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="robots" content="index, follow">
   <meta name="description" content="${description}">
   <meta name="theme-color" content="#0a1827">
   <title>${title}</title>
+  <link rel="canonical" href="${canonical}">
+  <link rel="alternate" hreflang="${language}" href="${canonical}">
+  <link rel="alternate" hreflang="${other}" href="${origin + otherRoute}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${description}">
+  <meta property="og:url" content="${canonical}">
+  <meta property="og:image" content="${ogImage}">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/assets/graphity-mark.png">
   <link rel="stylesheet" href="/assets/site.css">
   <link rel="stylesheet" href="/assets/solutions.css">
@@ -146,6 +157,7 @@ function home(context) {
     ${section('solutions', demo.d.serviceTitle, demo.cards(base) + services)}
     ${section('industries', t.industryTitle, industries, 'sol-tinted')}
     ${section('approach', t.approachTitle, `<p class="sol-approach">${t.approachText}</p>`, 'sol-dark')}
+    ${section('commitments', t.commitmentsTitle, `<div class="sol-industries">${t.commitments.map(([heading, detail]) => `<article><h3>${heading}</h3><p>${detail}</p></article>`).join('')}</div>`, 'sol-dark')}
     ${section('delivery', t.deliveryTitle, delivery)}
     ${section('capabilities', t.proof, `<p class="sol-section-note">${t.proofText}</p><div class="sol-actions">${link(t.journeyTitle, '#journey')} ${link(t.modulesTitle, '#modules')}</div>`, 'sol-tinted')}
     ${section('insights', t.insights, `${faq(t.guides)}<h3 class="sol-faq-title">${t.faq}</h3>${faq(t.common)}`)}
